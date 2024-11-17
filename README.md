@@ -33,10 +33,10 @@ The project utilizes state-of-the-art generative AI services for speech-to-text,
 
 - **Frontend**: HTML, CSS, JavaScript (hosted on GitHub Pages).
 - **APIs Used**:
- - [OpenAI Whisper](https://openai.com/whisper): Speech-to-text conversion.
- - [OpenAI GPT-4](https://platform.openai.com/docs/models/gpt-4): Job suggestion generation.
- - [ElevenLabs](https://elevenlabs.io/): Natural text-to-speech conversion.
- - [Synthesia](https://www.synthesia.io/): Video avatar creation.
+  - [OpenAI Whisper](https://openai.com/whisper): Speech-to-text conversion.
+  - [OpenAI GPT-4](https://platform.openai.com/docs/models/gpt-4): Job suggestion generation.
+  - [ElevenLabs](https://elevenlabs.io/): Natural text-to-speech conversion.
+  - [Synthesia](https://www.synthesia.io/): Video avatar creation.
 
 ---
 
@@ -45,8 +45,8 @@ The project utilizes state-of-the-art generative AI services for speech-to-text,
 1. **Open the Website**: Visit the hosted web app (link coming soon).
 2. **Record Your Input**: Click the record button and describe your interests or academic background.
 3. **Receive Suggestions**:
- - View personalized job recommendations in text and avatar format.
- - Listen to the suggestions presented by the avatar.
+  - View personalized job recommendations in text and avatar format.
+  - Listen to the suggestions presented by the avatar.
 
 ---
 
@@ -58,41 +58,41 @@ If you wish to run the project locally or contribute:
 
 - A modern web browser for frontend testing.
 - API keys for the following services:
- -OpenAI Whisper
- - OpenAI GPT-4
- - ElevenLabs
- - Synthesia
+  -OpenAI Whisper
+  - OpenAI GPT-4
+  - ElevenLabs
+  - Synthesia
 
 ### Steps
 
 1. **Clone the Repository**:
- ```bash
- git clone https://github.com/lifeisanoogie/nextstep-ai.git
- cd nextstep-ai
- ```
+  ```bash
+  git clone https://github.com/lifeisanoogie/nextstep-ai.git
+  cd nextstep-ai
+  ```
 
 2. **Install Dependencies**:
 
- - If a local backend is needed, set up Python and install required libraries:
+  - If a local backend is needed, set up Python and install required libraries:
   ```bash
   pip install flask openai requests
   ```
 
 3. **Add API Keys**:
 
- - Place your API keys in a .env file or a secure location:
- ```bash
- OPENAI_API_KEY=your_openai_key
- ELEVENLABS_API_KEY=your_elevenlabs_key
- SYNTHESIA_API_KEY=your_did_key
- ```
+  - Place your API keys in a .env file or a secure location:
+  ```bash
+  OPENAI_API_KEY=your_openai_key
+  ELEVENLABS_API_KEY=your_elevenlabs_key
+  SYNTHESIA_API_KEY=your_did_key
+  ```
 
 4. **Run the Web App**:
 
- - For local testing, you can serve the frontend using a simple HTTP server:
- ```bash
- python -m http.server
- ```
+  - For local testing, you can serve the frontend using a simple HTTP server:
+  ```bash
+  python -m http.server
+  ```
 
 ---
 
@@ -100,9 +100,9 @@ If you wish to run the project locally or contribute:
 
 - Current Version: 1.0 (Prototype)
 - Upcoming Features:
- - Improved error handling.
- - Integration of additional job-related APIs for accurate salary and growth data.
- - Enhanced user interface with better accessibility.
+  - Improved error handling.
+  - Integration of additional job-related APIs for accurate salary and growth data.
+  - Enhanced user interface with better accessibility.
 
 ---
 
@@ -113,19 +113,19 @@ Contributions are welcome! If you have suggestions for improving CareerCompanion
 1. Fork the repository.
 
 2. Create a new branch:
-```bash
-git checkout -b feature-name
-```
+  ```bash
+  git checkout -b feature-name
+  ```
 
 3. Commit your changes:
-```bash
-git commit -m "Added feature-name"
-```
+  ```bash
+  git commit -m "Added feature-name"
+  ```
 
 4. Push your branch:
-```bash
-git push origin feature-name
-```
+  ```bash
+  git push origin feature-name
+  ```
 
 5. Submit a pull request.
 
