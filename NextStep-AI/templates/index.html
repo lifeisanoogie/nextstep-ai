@@ -6,23 +6,29 @@
     <title>Dynamic Blue Orb</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <script src="{{ url_for('static', filename='script.js') }}" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
 </head>
 <body>
     <div id="blue-orb"></div>
+    
     <input type="text" id="user-input" placeholder="Type your message here...">
-    <button id="send-button" class="button">Send</button>
-    <button id="play-button" class="button">Play</button>
-    <button id="record-button" class="button">
-        <img src="{{ url_for('static', filename='img/microphone.png') }}" alt="Record" id="record-icon">
-    </button>
-    <button id="stop-button" class="button" style="display: none;">
-        <img src="{{ url_for('static', filename='img/microphone.png') }}" alt="Stop" id="stop-icon">
-    </button>
-    <div id="gear-icon" class="button" style="display: none;">
-        <img src="{{ url_for('static', filename='img/process.png') }}" alt="Processing" id="gear-icon-img">
+    
+    <div id="button-container">
+        <button id="send-button" class="button">Send</button>
+        <button id="play-button" class="button">Play</button>
+        <button id="record-button" class="button">
+            <img src="{{ url_for('static', filename='img/microphone.png') }}" alt="Record" id="record-icon">
+        </button>
+        <button id="stop-button" class="button" style="display: none;">
+            <img src="{{ url_for('static', filename='img/microphone.png') }}" alt="Stop" id="stop-icon">
+        </button>
+        <div id="gear-icon" class="button" style="display: none;">
+            <img src="{{ url_for('static', filename='img/process.png') }}" alt="Processing" id="gear-icon-img">
+        </div>
     </div>
+
     <button id="download-jobs-button" class="button">Download</button>
-    <button id="test-audio-button" class="button">Test Audio</button>
+    
     <audio id="audio" crossorigin="anonymous"></audio>
     
     <div id="job-suggestions" class="job-suggestions"></div>
