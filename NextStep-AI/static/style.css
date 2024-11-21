@@ -9,7 +9,8 @@ body {
 }
 
 #user-input {
-    width: 300px;
+    width: 600px;
+    height: 25  px;
     padding: 10px;
     margin-bottom: 10px;
     border-radius: 5px;
@@ -25,10 +26,6 @@ body {
     cursor: pointer;
     transition: background-color 0.3s ease;
     margin: 5px;
-}
-
-.button.ready {
-    background-color: #00ff00; /* Green color to indicate readiness */
 }
 
 #play-button {
@@ -164,14 +161,13 @@ body {
 }
 
 #blue-orb {
-    width: 50px; /* Set the size of the orb */
-    height: 50px; /* Set the size of the orb */
+    width: 80px; /* Set the size of the orb */
+    height: 80px; /* Set the size of the orb */
     background-color: blue; /* Color of the orb */
     border-radius: 50%; /* Make it circular */
     position: absolute; /* Position it absolutely */
-    bottom: 700px; /* Adjust this value to move it higher above the text box */
-    left: 50%; /* Center horizontally */
-    transform: translateX(-50%); /* Center the orb */
+    top: 10%; /* Adjust this value to move it higher above the text box */
+    left: 75%; /* Center horizontally */
     z-index: 1000; /* Ensure it appears above other elements */
     animation: none; /* No animation by default */
 }
@@ -181,9 +177,16 @@ body {
         transform: translateX(-50%) scale(1); /* Original size */
     }
     50% {
-        transform: translateX(-50%) scale(1.1); /* Grow */
+        transform: translateX(-50%) scale(1.25); /* Grow */
     }
     100% {
         transform: translateX(-50%) scale(1); /* Shrink back */
     }
+}
+
+#test-audio-button {
+    /* Custom styles for the test button */
+    background-color: #ffcc00; /* Example: yellow background */
+    color: #000; /* Example: black text */
+    border: 2px solid #ff9900; /* Example: orange border */
 }

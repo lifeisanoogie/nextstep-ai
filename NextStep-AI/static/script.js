@@ -66,20 +66,37 @@ stopButton.addEventListener("click", async () => {
     }, 2000); // 2 seconds delay
 });
 
-// Function to play audio
+// Function to play audio and sync the blue orb
 function playAudio(audioBase64, text) {
-    const audio = new Audio("data:audio/wav;base64," + audioBase64); // Create a new audio object
+    const audio = new Audio("data:audio/wav;base64," + audioBase64);
     const blueOrb = document.getElementById("blue-orb");
 
-    // Show the blue orb
-    blueOrb.style.display = "block"; // Ensure the orb is visible
+    // Create an audio context and analyser
+    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    const analyser = audioContext.createAnalyser();
+    const source = audioContext.createMediaElementSource(audio);
+    source.connect(analyser);
+    analyser.connect(audioContext.destination);
 
-    // Start playing the audio
+    // Set up frequency data array
+    const frequencyData = new Uint8Array(analyser.frequencyBinCount);
+
+    // Function to update the orb's animation based on frequency data
+    function updateOrb() {
+        analyser.getByteFrequencyData(frequencyData);
+        const averageFrequency = frequencyData.reduce((a, b) => a + b) / frequencyData.length;
+        const scale = 1 + (averageFrequency / 256); // Scale based on frequency
+
+        blueOrb.style.transform = `translateX(-50%) scale(${scale})`;
+        requestAnimationFrame(updateOrb);
+    }
+
+    // Start playing the audio and animation
     audio.play()
         .then(() => {
             console.log("Audio is playing");
-            // Add the grow animation
-            blueOrb.style.animation = "grow 1s ease-in-out infinite"; // Adjust duration as needed
+            blueOrb.style.display = "block";
+            updateOrb(); // Start updating the orb
         })
         .catch(error => {
             console.error("Error playing audio:", error);
@@ -87,8 +104,7 @@ function playAudio(audioBase64, text) {
 
     // Hide the blue orb when the audio ends
     audio.onended = () => {
-        blueOrb.style.animation = "none"; // Remove animation
-        blueOrb.style.display = "none"; // Hide the orb after audio ends
+        blueOrb.style.transform = "translateX(-50%) scale(1)"; // Reset scale
     };
 }
 
@@ -145,15 +161,49 @@ function displayJobSuggestions(suggestions) {
     });
 }
 
-// Function to adjust the width and height of the input box based on content
-function adjustInputSize() {
-    const userInput = document.getElementById("user-input");
-    userInput.style.height = "auto"; // Reset height to auto to measure scrollHeight
-    userInput.style.width = "auto"; // Reset width to auto to measure scrollWidth
-    userInput.style.width = `${Math.min(userInput.scrollWidth, 500)}px`; // Set width to scrollWidth, max 500px
-    userInput.style.height = `${userInput.scrollHeight}px`; // Set height to scrollHeight
+// Function to play local test audio and sync the blue orb
+function playTestAudio() {
+    const audio = new Audio('/static/am-i-totally-screwed-or.wav'); // Replace with the path to your WAV file
+    const blueOrb = document.getElementById("blue-orb");
+
+    // Create an audio context and analyser
+    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    const analyser = audioContext.createAnalyser();
+    const source = audioContext.createMediaElementSource(audio);
+    source.connect(analyser);
+    analyser.connect(audioContext.destination);
+
+    // Set up frequency data array
+    const frequencyData = new Uint8Array(analyser.frequencyBinCount);
+
+    // Function to update the orb's animation based on frequency data
+    function updateOrb() {
+        analyser.getByteFrequencyData(frequencyData);
+        const averageFrequency = frequencyData.reduce((a, b) => a + b) / frequencyData.length;
+        const scale = 1 + (averageFrequency / 128); // Scale based on frequency
+
+        blueOrb.style.transform = `translateX(-50%) scale(${scale})`;
+        requestAnimationFrame(updateOrb);
+    }
+
+    // Start playing the audio and animation
+    audio.play()
+        .then(() => {
+            console.log("Test audio is playing");
+            blueOrb.style.display = "block";
+            updateOrb(); // Start updating the orb
+        })
+        .catch(error => {
+            console.error("Error playing test audio:", error);
+        });
+
+    // Hide the blue orb when the audio ends
+    audio.onended = () => {
+        blueOrb.style.transform = "translateX(-50%) scale(1)"; // Reset scale
+    };
 }
 
-// Add event listener to adjust size on input
-userInput.addEventListener("input", adjustInputSize);
+// Add event listener for the test audio button
+document.getElementById("test-audio-button").addEventListener("click", playTestAudio);
+
 
