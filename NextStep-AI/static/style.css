@@ -1,0 +1,189 @@
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #464646;
+    margin: 0;
+}
+
+#user-input {
+    width: 300px;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: none;
+}
+
+.button {
+    padding: 10px 20px;
+    background-color: #00aaff;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin: 5px;
+}
+
+.button.ready {
+    background-color: #00ff00; /* Green color to indicate readiness */
+}
+
+#play-button {
+    display: none; /* Hidden by default */
+}
+
+.job-suggestions {
+    width: 80%;
+    max-height: 400px;
+    overflow-y: auto;
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #1e1e1e;
+    color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    font-family: Arial, sans-serif;
+}
+
+.job-card {
+    margin-bottom: 15px;
+    padding: 10px;
+    border-bottom: 1px solid #444;
+}
+
+.job-card:last-child {
+    border-bottom: none;
+}
+
+.job-card h3 {
+    margin: 0 0 5px;
+    color: #00aaff;
+}
+
+.job-card p {
+    margin: 5px 0;
+    font-size: 14px;
+}
+
+.job-card ul {
+    margin: 5px 0;
+    padding-left: 20px;
+}
+
+.job-card li {
+    margin-bottom: 5px;
+    font-size: 14px;
+    list-style-type: disc;
+}
+
+.chat-history {
+    width: 80%;
+    max-height: 300px; /* Set a maximum height */
+    overflow-y: auto; /* Enable vertical scrolling */
+    margin-top: 20px;
+    padding: 15px;
+    background-color: rgba(30, 30, 30, 0.8); /* Semi-transparent background */
+    color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    font-family: Arial, sans-serif;
+}
+
+.user-message {
+    text-align: right; /* Align user messages to the right */
+    color: #00ff00; /* User message color */
+}
+
+.assistant-message {
+    text-align: left; /* Align assistant messages to the left */
+    color: #00aaff; /* Assistant message color */
+}
+
+#record-button, #stop-button {
+    border: none; /* No border */
+    border-radius: 50%; /* Circular button */
+    width: 60px; /* Width of the button */
+    height: 60px; /* Height of the button */
+    display: flex; /* Flexbox for centering the icon */
+    justify-content: center; /* Center the icon horizontally */
+    align-items: center; /* Center the icon vertically */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s ease; /* Smooth transition */
+    padding: 0; /* Remove any padding */
+}
+
+#record-button {
+    background-color: blue; /* Default color */
+}
+
+#stop-button {
+    background-color: red; /* Red color for stop button */
+    display: none; /* Ensure it's hidden by default */
+}
+
+#record-button img, #stop-button img {
+    width: 40px; /* Size of the icon */
+    height: 40px; /* Size of the icon */
+    margin: 0; /* Remove any margin */
+}
+
+#record-indicator {
+    color: red; /* Color for the indicator */
+    font-weight: bold; /* Make it bold */
+    margin-top: 10px; /* Space above the indicator */
+}
+
+#processing-indicator {
+    color: yellow; /* Color for the processing indicator */
+    font-weight: bold; /* Make it bold */
+    margin-top: 10px; /* Space above the indicator */
+    font-size: 24px; /* Size of the indicator */
+}
+
+#gear-icon {
+    display: flex; /* Flexbox for centering the icon */
+    justify-content: center; /* Center the icon horizontally */
+    align-items: center; /* Center the icon vertically */
+    cursor: not-allowed; /* Change cursor to indicate it's not clickable */
+    background: transparent; /* Ensure the background is transparent */
+    border: none; /* Remove any border */
+}
+
+#gear-icon img {
+    width: 40px; /* Size of the icon */
+    height: 40px; /* Size of the icon */
+    animation: spin 1s linear infinite; /* Spin animation */
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(-360deg); } /* Counterclockwise spin */
+}
+
+#blue-orb {
+    width: 50px; /* Set the size of the orb */
+    height: 50px; /* Set the size of the orb */
+    background-color: blue; /* Color of the orb */
+    border-radius: 50%; /* Make it circular */
+    position: absolute; /* Position it absolutely */
+    bottom: 700px; /* Adjust this value to move it higher above the text box */
+    left: 50%; /* Center horizontally */
+    transform: translateX(-50%); /* Center the orb */
+    z-index: 1000; /* Ensure it appears above other elements */
+    animation: none; /* No animation by default */
+}
+
+@keyframes grow {
+    0% {
+        transform: translateX(-50%) scale(1); /* Original size */
+    }
+    50% {
+        transform: translateX(-50%) scale(1.1); /* Grow */
+    }
+    100% {
+        transform: translateX(-50%) scale(1); /* Shrink back */
+    }
+}

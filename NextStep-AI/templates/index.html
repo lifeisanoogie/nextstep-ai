@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Blue Orb</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="{{ url_for('static', filename='script.js') }}" defer></script>
+</head>
+<body>
+    <div id="blue-orb"></div>
+    <input type="text" id="user-input" placeholder="Type your message here...">
+    <button id="send-button" class="button">Send</button>
+    <button id="play-button" class="button">Play</button>
+    <button id="record-button" class="button">
+        <img src="{{ url_for('static', filename='img/microphone.png') }}" alt="Record" id="record-icon">
+    </button>
+    <button id="stop-button" class="button" style="display: none;">
+        <img src="{{ url_for('static', filename='img/microphone.png') }}" alt="Stop" id="stop-icon">
+    </button>
+    <div id="gear-icon" class="button" style="display: none;">
+        <img src="{{ url_for('static', filename='img/process.png') }}" alt="Processing" id="gear-icon-img">
+    </div>
+    <button id="download-jobs-button" class="button">Download</button>
+    <audio id="audio" crossorigin="anonymous"></audio>
+    
+    <div id="job-suggestions" class="job-suggestions"></div>
+    <div id="chat-history" class="chat-history"></div>
+    <div id="record-indicator" style="display: none;">Recording...</div>
+    <div id="processing-indicator" style="display: none;">...</div>
+    <div id="speech-bubble" class="speech-bubble" style="display: none;"></div>
+</body>
+</html>
