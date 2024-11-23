@@ -1,5 +1,3 @@
-from openai import OpenAI
-from elevenlabs.client import ElevenLabs
 from dotenv import load_dotenv
 import os
 
