@@ -4,7 +4,7 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color: #464646;
+    background-color: rgb(69, 69, 69);
     margin: 0;
     position: relative;
 }
@@ -220,4 +220,12 @@ body {
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(-360deg); } /* Counterclockwise spin */
+}
+
+#avatar-image {
+    width: 300px;
+    height: auto;
+    position: absolute;
+    bottom: 0%;
+    right: 5%;
 }

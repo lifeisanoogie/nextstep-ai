@@ -42,7 +42,12 @@ conversational phrasing. Avoid sounding like a list or overly formal.
                 
 """
 
-test_prompt = """
+#-------------------- Testing Prompts -----------------------------------------------
+
+test_prompt_career_assistant_history = [ {
+    
+    "role": "system",
+    "content": """
 You are a helpful testing assistant. You are given an input and need to return two parts:
 1. A short text response that can be reformatted for text-to-speech. Keep it simple and conversational.
 2. A fake JSON object representing job suggestions for testing webpage rendering.
@@ -71,6 +76,16 @@ The JSON object should look like this:
 
 Respond with both the short text and the JSON object.
 """
+    }
+]
 
-# Define your chat history
-chat_history = []
+test_prompt_tts_assistant = """
+You are a helpful testing assistant. You are given an input that has two parts:
+1. A simple and coversational message
+2. A JSON object
+
+You should ignore the JSON object and just reformat the simple and conversational message
+that is good for a text-to-speech tool to read. This should be no more than one or two short
+sentences in order to save resources while testing.
+
+"""

@@ -9,6 +9,7 @@ const gearIcon = document.getElementById("gear-icon");
 const jobSuggestionsContainer = document.getElementById("job-suggestions");
 let isRecording = false;
 let transcriptionData = ""; // Variable to store transcription data
+let chat_history = [];
 
 // Start recording
 recordButton.addEventListener("click", async () => {
@@ -111,8 +112,9 @@ function playAudio(audioBase64, text) {
 
 // Add event listener for the send button
 sendButton.addEventListener("click", async () => {
-    const userMessage = userInput.value; // Get the user input
-    if (userMessage.trim() === "") return; // Prevent sending empty messages
+    const userMessage = userInput.value.trim(); // Get the user input and trim whitespace
+    if (userMessage === "") return; // Prevent sending empty messages
+
 
     try {
         const response = await fetch('/generate', {
@@ -122,14 +124,25 @@ sendButton.addEventListener("click", async () => {
             },
             body: JSON.stringify({ text: userMessage }) // Send the user message
         });
+        
         const data = await response.json(); // Get the response data
-        console.log("Response from server:", data);
+        console.log("Response from server:", data); // Log the response data
         
         // Clear the input box after sending the message
         userInput.value = ""; // Clear the input box
 
+        // Display the user's message in the chat history
+        displayChatMessage(userMessage, "user-message");
+    
+        // Update the chat history array
+        chat_history.push({ role: "user", content: userMessage });
+
+        // Display the assistant's response in the chat history
+        displayChatMessage(data.ttsResponse, "assistant-message"); // Assuming ttsResponse contains the assistant's reply
+        chat_history.push({ role: "assistant", content: data.ttsResponse }); // Update chat history
+
         // Display the job suggestions in the job suggestions container
-        displayJobSuggestions(data.suggestions);
+        displayJobSuggestions(data.suggestions); // No need to parse again
 
         // Play the audio if available
         if (data.audio) {
@@ -144,9 +157,9 @@ sendButton.addEventListener("click", async () => {
 // Function to display job suggestions
 function displayJobSuggestions(suggestions) {
     jobSuggestionsContainer.innerHTML = ""; // Clear previous suggestions
-    const parsedSuggestions = JSON.parse(suggestions); // Parse the JSON string
 
-    parsedSuggestions.forEach(job => {
+    // No need to parse suggestions again
+    suggestions.forEach(job => {
         const jobCard = document.createElement("div");
         jobCard.className = "job-card";
         jobCard.innerHTML = `
