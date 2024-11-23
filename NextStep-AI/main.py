@@ -1,4 +1,4 @@
-from openai_llm_functions import message_career_assistant, test_message_career_assistant
+from openai_llm_functions import message_career_assistant
 from elevenlabs_functions import text_to_speech_elevenlabs
 from flask import Flask, render_template, request, jsonify
 import base64
@@ -21,7 +21,7 @@ def generate():
     text = data["text"]
     try:
         print("Received generate request")
-        response, tts_response = test_message_career_assistant(text)
+        response, tts_response = message_career_assistant(text)
 
         # Check if response is a valid JSON string
         try:
