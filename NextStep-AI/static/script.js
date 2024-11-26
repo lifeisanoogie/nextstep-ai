@@ -20,12 +20,7 @@ recordButton.addEventListener("click", async () => {
 
     try {
         // Start recording
-        const response = await fetch('/start_recording', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        });
+        const response = await fetch('/start_recording', { method: 'POST' });
         console.log("Recording started:", await response.json());
     } catch (error) {
         console.error("Error starting recording:", error);
@@ -43,12 +38,7 @@ stopButton.addEventListener("click", async () => {
     gearIcon.style.display = "flex"; // Show gear icon
 
     // Stop recording
-    const response = await fetch('/stop_recording', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    });
+    const response = await fetch('/stop_recording', { method: 'POST' });
     const data = await response.json(); // Get the transcription data
     console.log("Recording stopped:", data.message);
     console.log("Transcription:", data.transcription); // Log the transcription
@@ -115,8 +105,19 @@ sendButton.addEventListener("click", async () => {
     const userMessage = userInput.value.trim(); // Get the user input and trim whitespace
     if (userMessage === "") return; // Prevent sending empty messages
 
+    // Show gear icon to indicate loading
+    processingIndicator.style.display = "block"; // Show processing indicator
+    gearIcon.style.display = "flex"; // Show gear icon
+    sendButton.disabled = true; // Disable the send button to prevent multiple clicks
 
     try {
+
+        // Clear the input box after sending the message
+        userInput.value = ""; // Clear the input box
+
+        // Update the chat history array
+        chat_history.push({ role: "user", content: userMessage });
+
         const response = await fetch('/generate', {
             method: 'POST',
             headers: {
@@ -125,17 +126,11 @@ sendButton.addEventListener("click", async () => {
             body: JSON.stringify({ text: userMessage }) // Send the user message
         });
         
-        const data = await response.json(); // Get the response data
-        console.log("Response from server:", data); // Log the response data
-        
-        // Clear the input box after sending the message
-        userInput.value = ""; // Clear the input box
-
         // Display the user's message in the chat history
         displayChatMessage(userMessage, "user-message");
-    
-        // Update the chat history array
-        chat_history.push({ role: "user", content: userMessage });
+
+        const data = await response.json(); // Get the response data
+        console.log("Response from server:", data); // Log the response data
 
         // Display the assistant's response in the chat history
         displayChatMessage(data.ttsResponse, "assistant-message"); // Assuming ttsResponse contains the assistant's reply
@@ -151,27 +146,32 @@ sendButton.addEventListener("click", async () => {
 
     } catch (error) {
         console.error("Error sending message:", error);
+    } finally {
+        // Reset UI elements after processing
+        processingIndicator.style.display = "none"; // Hide processing indicator
+        gearIcon.style.display = "none"; // Hide gear icon
+        sendButton.disabled = false; // Re-enable the send button
     }
 });
 
 // Function to display job suggestions
 function displayJobSuggestions(suggestions) {
-    jobSuggestionsContainer.innerHTML = ""; // Clear previous suggestions
+    const container = document.getElementById("job-suggestions");
+    container.innerHTML = ""; // Clear previous suggestions
 
-    // No need to parse suggestions again
-    suggestions.forEach(job => {
+    suggestions.forEach((job) => {
         const jobCard = document.createElement("div");
-        jobCard.className = "job-card";
+        jobCard.classList.add("job-card");
         jobCard.innerHTML = `
             <h3>${job.title}</h3>
-            <p>${job.description}</p>
-            <p><strong>Skills:</strong> ${job.skills.join(", ")}</p>
-            <p><strong>Salary:</strong> ${job.salary}</p>
-            <p><strong>Growth:</strong> ${job.growth}</p>
-            <p><strong>Companies:</strong> ${job.companies.join(", ")}</p>
-            <p><strong>Certifications:</strong> ${job.certifications.join(", ")}</p>
+            <p>${job.description || "Description not available."}</p>
+            <p><strong>Key Skills:</strong> ${job.skills || "Not specified."}</p>
+            <p><strong>Salary:</strong> ${job.salary || "Data not available."}</p>
+            <p><strong>Projected Growth:</strong> ${job.growth || "Not provided."}</p>
+            <p><strong>Recommended Companies:</strong> ${job.companies || "No recommendations available."}</p>
+            <p><strong>Certifications:</strong> ${job.certifications || "No certifications available."}</p>
         `;
-        jobSuggestionsContainer.appendChild(jobCard); // Add the job card to the container
+        container.appendChild(jobCard);
     });
 }
 
@@ -227,3 +227,39 @@ function displayChatMessage(message, className) {
     chatHistoryContainer.appendChild(messageElement);
 }
 
+// Add event listener for the new chat button
+document.getElementById("new-chat-button").addEventListener("click", async () => {
+    try {
+        // Send a request to reset the chat
+        const response = await fetch('/reset_chat', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error("Failed to reset chat");
+        }
+
+        // Clear the chat history
+        chat_history = []; // Reset the chat history array
+        const chatHistoryContainer = document.getElementById("chat-history");
+        chatHistoryContainer.innerHTML = ""; // Clear the chat history display
+
+        // Clear job suggestions
+        const jobSuggestionsContainer = document.getElementById("job-suggestions");
+        jobSuggestionsContainer.innerHTML = ""; // Clear the job suggestions display
+
+        // Reset the user input field
+        userInput.value = ""; // Clear the input box
+
+        // Optionally, reset any other UI elements or states as needed
+        processingIndicator.style.display = "none"; // Hide processing indicator
+        gearIcon.style.display = "none"; // Hide gear icon
+
+        console.log("Chat history reset successfully.");
+    } catch (error) {
+        console.error("Error resetting chat:", error);
+    }
+});
