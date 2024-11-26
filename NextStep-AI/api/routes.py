@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify, render_template
-from api.api_clients import openai_job_suggestions, tts_elevenlabs
+from api.api_clients import openai_job_suggestions, tts_elevenlabs, openai_followup
 from api.audio_recorder import AudioRecorder
 from settings import clear_message_history
 import base64
@@ -15,6 +15,7 @@ recorder = AudioRecorder()
 def generate():
     data = request.json
     user_input = data.get("text")
+
     print(f"Got input: ", user_input)
     try:
         if not user_input:
@@ -29,7 +30,7 @@ def generate():
         if isinstance(suggestions_parsed, set):
             suggestions_parsed = list(suggestions_parsed)
 
-        audio = tts_elevenlabs("Hello")
+        audio = tts_elevenlabs(tts_response)
         if not audio:
             return jsonify({"error": "Failed to generate TTS audio"}), 500
 
@@ -41,6 +42,30 @@ def generate():
         })
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
+@routes.route("/followup", methods=["POST"])
+def followup():
+    data = request.json
+    user_input = data.get("text")
+    print(f"Got input: ", user_input)
+    try:
+        if not user_input:
+            return jsonify({"error": "No text provided for OpenAI API."}), 400
+        
+        followup_response = openai_followup(user_input)
+
+        audio = tts_elevenlabs(followup_response)
+        if not audio:
+            return jsonify({"error": "Failed to generate TTS audio"}), 500
+
+        audio_base64 = base64.b64encode(audio).decode("utf-8")
+        return jsonify({
+            "audio": audio_base64, 
+            "followupResponse": followup_response
+        })
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
 
 @routes.route("/start_recording", methods=["POST"])
 def start_recording_route():

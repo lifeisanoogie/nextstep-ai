@@ -6,3 +6,6 @@ __pycache__/
 
 # Ignore other unwanted files
 *.log
+
+# Ignore generated wav file
+output.wav

@@ -10,6 +10,40 @@ const jobSuggestionsContainer = document.getElementById("job-suggestions");
 let isRecording = false;
 let transcriptionData = ""; // Variable to store transcription data
 let chat_history = [];
+let firstChat = true;
+
+// Add event listener for the play/pause button
+const playPauseButton = document.getElementById("play-pause-button");
+const playPauseIcon = document.getElementById("play-pause-icon");
+let isAudioPlaying = false; // Track audio playing state
+
+playPauseButton.addEventListener("click", () => {
+    const audioElement = document.getElementById("audio");
+
+    // Check if there is a valid audio source
+    if (!audioElement.src) {
+        console.warn("No audio source available to play.");
+        alert("No audio available to play."); // Notify the user
+        return; // Exit the function if no audio is available
+    }
+
+    if (isAudioPlaying) {
+        audioElement.pause(); // Pause the audio
+        playPauseIcon.src = "{{ url_for('static', filename='img/play-icon.png') }}"; // Change to play icon
+    } else {
+        audioElement.play() // Play the audio
+            .then(() => {
+                console.log("Audio is playing");
+                playPauseIcon.src = "{{ url_for('static', filename='img/pause-icon.png') }}"; // Change to pause icon
+            })
+            .catch(error => {
+                console.error("Error playing audio:", error);
+                alert("Error playing audio. Please try again."); // Notify the user of the error
+            });
+    }
+
+    isAudioPlaying = !isAudioPlaying; // Toggle the state
+});
 
 // Start recording
 recordButton.addEventListener("click", async () => {
@@ -59,9 +93,13 @@ stopButton.addEventListener("click", async () => {
 });
 
 // Function to play audio and sync the blue orb
-function playAudio(audioBase64, text) {
+function playAudio(audioBase64) {
     const audio = new Audio("data:audio/wav;base64," + audioBase64);
     const blueOrb = document.getElementById("blue-orb");
+
+    // Set the audio element to the global variable
+    const audioElement = document.getElementById("audio");
+    audioElement.src = "data:audio/wav;base64," + audioBase64;
 
     // Create an audio context and analyser
     const audioContext = new (window.AudioContext || window.webkitAudioContext)();
@@ -89,14 +127,19 @@ function playAudio(audioBase64, text) {
             console.log("Audio is playing");
             blueOrb.style.display = "block";
             updateOrb(); // Start updating the orb
+            isAudioPlaying = true; // Set audio playing state
+            playPauseIcon.src = "{{ url_for('static', filename='img/pause-icon.png') }}"; // Change to pause icon
         })
         .catch(error => {
             console.error("Error playing audio:", error);
+            alert("Error playing audio. Please try again."); // Notify the user of the error
         });
 
     // Hide the blue orb when the audio ends
     audio.onended = () => {
         blueOrb.style.transform = "translateX(-50%) scale(1)"; // Reset scale
+        isAudioPlaying = false; // Reset audio playing state
+        playPauseIcon.src = "{{ url_for('static', filename='img/play-icon.png') }}"; // Change to play icon
     };
 }
 
@@ -110,38 +153,52 @@ sendButton.addEventListener("click", async () => {
     gearIcon.style.display = "flex"; // Show gear icon
     sendButton.disabled = true; // Disable the send button to prevent multiple clicks
 
+    // Clear the input box after sending the message
+    userInput.value = ""; // Clear the input box
+
+    // Update the chat history array
+    chat_history.push({ role: "user", content: userMessage });
+
+    // Display the user's message in the chat history
+    displayChatMessage(userMessage, "user-message");
+
     try {
+        const endpoint = firstChat ? '/generate' : '/followup'; // Determine the endpoint based on firstChat
+        if (firstChat) firstChat = false; // Set firstChat to false after the first message
 
-        // Clear the input box after sending the message
-        userInput.value = ""; // Clear the input box
-
-        // Update the chat history array
-        chat_history.push({ role: "user", content: userMessage });
-
-        const response = await fetch('/generate', {
+        const response = await fetch(endpoint, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({ text: userMessage }) // Send the user message
         });
-        
-        // Display the user's message in the chat history
-        displayChatMessage(userMessage, "user-message");
 
         const data = await response.json(); // Get the response data
         console.log("Response from server:", data); // Log the response data
 
-        // Display the assistant's response in the chat history
-        displayChatMessage(data.ttsResponse, "assistant-message"); // Assuming ttsResponse contains the assistant's reply
-        chat_history.push({ role: "assistant", content: data.ttsResponse }); // Update chat history
+        // Check if ttsResponse exists and display it
+        if (data.ttsResponse) {
+            displayChatMessage(data.ttsResponse, "assistant-message"); // Display ttsResponse
+            chat_history.push({ role: "assistant", content: data.ttsResponse }); // Update chat history
+        } else {
+            console.warn("No ttsResponse found in the response data.");
+        }
+
+        // Display the follow-up response if it's not the first chat
+        if (!firstChat && data.followupResponse) {
+            displayChatMessage(data.followupResponse, "assistant-message"); // Display followupResponse
+            chat_history.push({ role: "assistant", content: data.followupResponse }); // Update chat history
+        }
 
         // Display the job suggestions in the job suggestions container
-        displayJobSuggestions(data.suggestions); // No need to parse again
+        if (data.suggestions) {
+            displayJobSuggestions(data.suggestions); // No need to parse again
+        }
 
         // Play the audio if available
         if (data.audio) {
-            playAudio(data.audio, data.ttsResponse); // Pass the TTS response text for the bubble
+            playAudio(data.audio);
         }
 
     } catch (error) {
@@ -230,6 +287,13 @@ function displayChatMessage(message, className) {
 // Add event listener for the new chat button
 document.getElementById("new-chat-button").addEventListener("click", async () => {
     try {
+        // Stop any currently playing audio
+        const audioElement = document.getElementById("audio");
+        if (!audioElement.paused) {
+            audioElement.pause(); // Pause the audio
+            audioElement.currentTime = 0; // Reset the audio to the beginning
+        }
+
         // Send a request to reset the chat
         const response = await fetch('/reset_chat', {
             method: 'POST',
@@ -257,6 +321,7 @@ document.getElementById("new-chat-button").addEventListener("click", async () =>
         // Optionally, reset any other UI elements or states as needed
         processingIndicator.style.display = "none"; // Hide processing indicator
         gearIcon.style.display = "none"; // Hide gear icon
+        firstChat = true; // Reset first chat indicator
 
         console.log("Chat history reset successfully.");
     } catch (error) {
