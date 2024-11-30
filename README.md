@@ -38,27 +38,27 @@ NextStep AI is an interactive web application that provides personalized job sug
    ```bash
    git clone https://github.com/your-username/nextstep-ai.git
    cd nextstep-ai
-  ```
+   ```
 
 2. Install the required Python libraries:
-  ```bash
-  pip install -r requirements.txt
-  ```
+    ```bash
+    pip install -r requirements.txt
+    ```
 
 3. Create a .env file in the root directory:
   - Copy the contents of .env.example:
 
-  ```bash
-  OPENAI_API_KEY=your_openai_api_key_here
-  ELEVENLABS_API_KEY=your_elevenlabs_api_key_here
-  ```
+    ```bash
+    OPENAI_API_KEY=your_openai_api_key_here
+    ELEVENLABS_API_KEY=your_elevenlabs_api_key_here
+    ```
 
   - Replace the placeholders with your actual API keys
 
 4. Run the Flask application:
-  ```bash
-  python app.py
-  ```
+    ```bash
+    python app.py
+    ```
   
 5. Open the application in your browser:
   - Visit `http://127.0.0.1:5000`
@@ -87,17 +87,17 @@ I welcome contributions! Follow the steps to get involved:
 
 1. Fork the repository.
 2. Create a new branch:
-```bash
-git checkout -b feature-name
-```
+  ```bash
+  git checkout -b feature-name
+  ```
 3. Make your changes and commit them:
-```bash
-git commit -m "Add new feature"
-```
+  ```bash
+  git commit -m "Add new feature"
+  ```
 4. Push your brnach to your forked repository:
-```bash
-git push origin feature-name
-```
+  ```bash
+  git push origin feature-name
+  ```
 5. Open a pull request.
 
 ### Known Issues
