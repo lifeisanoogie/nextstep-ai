@@ -39,21 +39,27 @@ NextStep AI is an interactive web application that provides personalized job sug
    git clone https://github.com/your-username/nextstep-ai.git
    cd nextstep-ai
   ```
+
 2. Install the required Python libraries:
   ```bash
   pip install -r requirements.txt
   ```
+
 3. Create a .env file in the root directory:
   - Copy the contents of .env.example:
+
   ```bash
   OPENAI_API_KEY=your_openai_api_key_here
   ELEVENLABS_API_KEY=your_elevenlabs_api_key_here
   ```
+
   - Replace the placeholders with your actual API keys
+
 4. Run the Flask application:
   ```bash
   python app.py
   ```
+  
 5. Open the application in your browser:
   - Visit `http://127.0.0.1:5000`
 
