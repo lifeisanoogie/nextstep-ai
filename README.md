@@ -71,8 +71,8 @@ nextstep-ai/
 ├── settings.py             # Environment and configuration settings
 ├── api
 │   ├── api_clients.py      # API integrations for OpenAI and ElevenLabs
-|   ├── audio_recorder.py   # Handles audio recording and processing
-|   ├── routes.py           # Defines application routes
+│   ├── audio_recorder.py   # Handles audio recording and processing
+│   ├── routes.py           # Defines application routes
 ├── templates/              # HTML files
 │   ├── index.html          # Main webpage template
 ├── static/
