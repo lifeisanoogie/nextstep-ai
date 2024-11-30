@@ -67,18 +67,19 @@ NextStep AI is an interactive web application that provides personalized job sug
 
 ```bash
 nextstep-ai/
-├── app.py              # Main Flask application
-├── settings.py         # Environment and configuration settings
-├── api_clients.py      # API integrations for OpenAI and ElevenLabs
-├── audio_recorder.py   # Handles audio recording and processing
-├── routes.py           # Defines application routes
-├── templates/          # HTML files
-│   ├── index.html      # Main webpage template
+├── app.py                  # Main Flask application
+├── settings.py             # Environment and configuration settings
+├── api
+│   ├── api_clients.py      # API integrations for OpenAI and ElevenLabs
+|   ├── audio_recorder.py   # Handles audio recording and processing
+|   ├── routes.py           # Defines application routes
+├── templates/              # HTML files
+│   ├── index.html          # Main webpage template
 ├── static/
-│   ├── style.css       # Styling for the application
-│   ├── script.js       # JavaScript for frontend interaction
-├── .env.example        # Template for environment variables
-├── requirements.txt    # Python dependencies
+│   ├── style.css           # Styling for the application
+│   ├── script.js           # JavaScript for frontend interaction
+├── .env.example            # Template for environment variables
+├── requirements.txt        # Python dependencies
 ```
 
 ### How to Contribute
