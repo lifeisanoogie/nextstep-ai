@@ -1,146 +1,113 @@
 # **NextStep AI**
 
-_Interactive Job Search Assistant Using Generative AI_
-
-## **Overview**
-
-NextStep AI is a web-based application designed to assist users in exploring career opportunities by leveraging generative AI tools. The platform allows users to interact with an intelligent avatar, share their academic background and interests, and receive personalized job suggestions with key details like salary ranges, job growth, and degree requirements.
-
-The project utilizes state-of-the-art generative AI services for speech-to-text, natural language understanding, text-to-speech, and avatar creation.
+NextStep AI is an interactive web application that provides personalized job suggestions and career advice, powered by generative AI tools like OpenAI and ElevenLabs. The application also uses a text-to-speech (TTS) feature to deliver responses in a natural, conversational tone.
 
 ---
 
 ## **Features**
 
-- **Speech-to-Text**: Converts user speech into text using OpenAI Whisper.
-- **Job Recommendations**: Provides tailored job titles and details using GPT-4.
-- **Text-to-Speech**: Delivers job suggestions in a natural-sounding voice using ElevenLabs.
-- **Interactive Avatar**: Displays suggestions through a lifelike video avatar powered by D-ID.
+- **Personalized Job Suggestions**: Receive tailored job recommendations based on your academic background, skills, and interests.
+- **Follow-Up Question Handling**: Ask follow-up questions about job suggestions, skills, or industries for more clarity and guidance.
+- **Text-to-Speech Integration**: Hear responses read aloud through a seamless TTS interface.
+- **Interactive User Experience**: A clean and simple web interface for user interaction.
+- **Dynamic Message History**: Context-aware responses based on previous interactions.
 
 ---
 
-## **System Architecture**
+## **Technologies Used**
 
-1. **Speech Input**: Users speak about their interests and academic background.
-2. **Speech-to-Text**: Whisper API processes the audio into text.
-3. **Job Generation**: GPT-4 generates job suggestions based on the transcription.
-4. **Text-to-Speech**: ElevenLabs converts the text suggestions into audio.
-5. **Avatar Presentation**: D-ID creates a video of an avatar delivering the suggestions.
-
----
-
-## **Technology Stack**
-
-- **Frontend**: HTML, CSS, JavaScript (hosted on GitHub Pages).
-- **APIs Used**:
-  - [OpenAI Whisper](https://openai.com/whisper): Speech-to-text conversion.
-  - [OpenAI GPT-4](https://platform.openai.com/docs/models/gpt-4): Job suggestion generation.
-  - [ElevenLabs](https://elevenlabs.io/): Natural text-to-speech conversion.
-  - [Synthesia](https://www.synthesia.io/): Video avatar creation.
+- **Backend**: Python, Flask
+- **Frontend**: HTML, CSS, JavaScript
+- **APIs**:
+  - OpenAI GPT for generating job suggestions and answering follow-up questions.
+  - ElevenLabs for generating natural-sounding TTS audio.
+- **Audio Recording**: PyAudio for recording and processing user audio input.
 
 ---
 
-## **How to Use**
-
-1. **Open the Website**: Visit the hosted web app (link coming soon).
-2. **Record Your Input**: Click the record button and describe your interests or academic background.
-3. **Receive Suggestions**:
-  - View personalized job recommendations in text and avatar format.
-  - Listen to the suggestions presented by the avatar.
-
----
-
-## **Setup and Installation**
-
-If you wish to run the project locally or contribute:
+## **Setup Instructions**
 
 ### Prerequisites
 
-- A modern web browser for frontend testing.
-- API keys for the following services:
-  -OpenAI Whisper
-  - OpenAI GPT-4
-  - ElevenLabs
-  - Synthesia
+- **Python 3.8+**
+- **Node.js (optional for frontend customization)**
 
-### Steps
+### Installation
 
-1. **Clone the Repository**:
-  ```bash
-  git clone https://github.com/lifeisanoogie/nextstep-ai.git
-  cd nextstep-ai
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/your-username/nextstep-ai.git
+   cd nextstep-ai
   ```
-
-2. **Install Dependencies**:
-
-  - If a local backend is needed, set up Python and install required libraries:
+2. Install the required Python libraries:
   ```bash
-  pip install flask openai requests
+  pip install -r requirements.txt
   ```
-
-3. **Add API Keys**:
-
-  - Place your API keys in a .env file or a secure location:
+3. Create a .env file in the root directory:
+  - Copy the contents of .env.example:
   ```bash
-  OPENAI_API_KEY=your_openai_key
-  ELEVENLABS_API_KEY=your_elevenlabs_key
-  SYNTHESIA_API_KEY=your_did_key
+  OPENAI_API_KEY=your_openai_api_key_here
+  ELEVENLABS_API_KEY=your_elevenlabs_api_key_here
   ```
-
-4. **Run the Web App**:
-
-  - For local testing, you can serve the frontend using a simple HTTP server:
+  - Replace the placeholders with your actual API keys
+4. Run the Flask application:
   ```bash
-  python -m http.server
+  python app.py
   ```
+5. Open the application in your browser:
+  - Visit `http://127.0.0.1:5000`
 
----
+### File Structure
 
-## **Project Status**
+```bash
+nextstep-ai/
+├── app.py              # Main Flask application
+├── settings.py         # Environment and configuration settings
+├── api_clients.py      # API integrations for OpenAI and ElevenLabs
+├── audio_recorder.py   # Handles audio recording and processing
+├── routes.py           # Defines application routes
+├── templates/          # HTML files
+│   ├── index.html      # Main webpage template
+├── static/
+│   ├── style.css       # Styling for the application
+│   ├── script.js       # JavaScript for frontend interaction
+├── .env.example        # Template for environment variables
+├── requirements.txt    # Python dependencies
+```
 
-- Current Version: 1.0 (Prototype)
-- Upcoming Features:
-  - Improved error handling.
-  - Integration of additional job-related APIs for accurate salary and growth data.
-  - Enhanced user interface with better accessibility.
+### How to Contribute
 
----
-
-## **Contributing**
-
-Contributions are welcome! If you have suggestions for improving CareerCompanion or would like to report issues, please follow these steps:
+I welcome contributions! Follow the steps to get involved:
 
 1. Fork the repository.
-
 2. Create a new branch:
-  ```bash
-  git checkout -b feature-name
-  ```
+```bash
+git checkout -b feature-name
+```
+3. Make your changes and commit them:
+```bash
+git commit -m "Add new feature"
+```
+4. Push your brnach to your forked repository:
+```bash
+git push origin feature-name
+```
+5. Open a pull request.
 
-3. Commit your changes:
-  ```bash
-  git commit -m "Added feature-name"
-  ```
+### Known Issues
+- The application currently does not support resuming audio playback after stopping.
+- TTS responses might take slightly longer for complex queries due to API processing time.
 
-4. Push your branch:
-  ```bash
-  git push origin feature-name
-  ```
+### Feature Enhancements
+- Add a database to store user preferences and history for personalized recommendations.
+- Implement advanced audio controls (e.g., pause, resume).
+- Enhance the UI with better animations and accessibility features.
 
-5. Submit a pull request.
+### License
+This project is licensed under the MIT License. See the LICENSE file for details.
 
----
+### Acknowledgments
+- Dr. Tyler Bells and his class on Generative AI Tools at the University of Iowa. Without his instruction on APIs this project would not exist.
 
-## **License**
-
-This project is licensed under the `[LICENSE TYPE HERE]` License. See the LICENSE file for details.
-
----
-
-## **Contact**
-
-If you have questions or feedback, feel free to reach out:
-
-- Project Owner: Timothy Stelmat
-- Email: timothystelmat@gmail.com
-- GitHub: lifeisanoogie
+### Contact
+For any questions or suggestions, please contact timothystelmat@gmail.com

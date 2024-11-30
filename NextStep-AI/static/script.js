@@ -7,43 +7,10 @@ const stopButton = document.getElementById("stop-button");
 const processingIndicator = document.getElementById("processing-indicator");
 const gearIcon = document.getElementById("gear-icon");
 const jobSuggestionsContainer = document.getElementById("job-suggestions");
-let isRecording = false;
+let isRecording = false; // State to track if recording is active
 let transcriptionData = ""; // Variable to store transcription data
-let chat_history = [];
-let firstChat = true;
-
-// Add event listener for the play/pause button
-const playPauseButton = document.getElementById("play-pause-button");
-const playPauseIcon = document.getElementById("play-pause-icon");
-let isAudioPlaying = false; // Track audio playing state
-
-playPauseButton.addEventListener("click", () => {
-    const audioElement = document.getElementById("audio");
-
-    // Check if there is a valid audio source
-    if (!audioElement.src) {
-        console.warn("No audio source available to play.");
-        alert("No audio available to play."); // Notify the user
-        return; // Exit the function if no audio is available
-    }
-
-    if (isAudioPlaying) {
-        audioElement.pause(); // Pause the audio
-        playPauseIcon.src = "{{ url_for('static', filename='img/play-icon.png') }}"; // Change to play icon
-    } else {
-        audioElement.play() // Play the audio
-            .then(() => {
-                console.log("Audio is playing");
-                playPauseIcon.src = "{{ url_for('static', filename='img/pause-icon.png') }}"; // Change to pause icon
-            })
-            .catch(error => {
-                console.error("Error playing audio:", error);
-                alert("Error playing audio. Please try again."); // Notify the user of the error
-            });
-    }
-
-    isAudioPlaying = !isAudioPlaying; // Toggle the state
-});
+let chat_history = []; // Array to store chat history
+let firstChat = true; // Flag to track if it's the first chat
 
 // Start recording
 recordButton.addEventListener("click", async () => {
@@ -58,7 +25,7 @@ recordButton.addEventListener("click", async () => {
         console.log("Recording started:", await response.json());
     } catch (error) {
         console.error("Error starting recording:", error);
-        resetRecordingButtons();
+        resetRecordingButtons(); // Reset buttons if there's an error
     }
 });
 
@@ -127,8 +94,6 @@ function playAudio(audioBase64) {
             console.log("Audio is playing");
             blueOrb.style.display = "block";
             updateOrb(); // Start updating the orb
-            isAudioPlaying = true; // Set audio playing state
-            playPauseIcon.src = "{{ url_for('static', filename='img/pause-icon.png') }}"; // Change to pause icon
         })
         .catch(error => {
             console.error("Error playing audio:", error);
@@ -138,8 +103,6 @@ function playAudio(audioBase64) {
     // Hide the blue orb when the audio ends
     audio.onended = () => {
         blueOrb.style.transform = "translateX(-50%) scale(1)"; // Reset scale
-        isAudioPlaying = false; // Reset audio playing state
-        playPauseIcon.src = "{{ url_for('static', filename='img/play-icon.png') }}"; // Change to play icon
     };
 }
 
@@ -210,26 +173,36 @@ sendButton.addEventListener("click", async () => {
         sendButton.disabled = false; // Re-enable the send button
     }
 });
-
 // Function to display job suggestions
 function displayJobSuggestions(suggestions) {
     const container = document.getElementById("job-suggestions");
     container.innerHTML = ""; // Clear previous suggestions
-
-    suggestions.forEach((job) => {
+    suggestions.forEach((job, index) => {
         const jobCard = document.createElement("div");
         jobCard.classList.add("job-card");
         jobCard.innerHTML = `
-            <h3>${job.title}</h3>
-            <p>${job.description || "Description not available."}</p>
-            <p><strong>Key Skills:</strong> ${job.skills || "Not specified."}</p>
-            <p><strong>Salary:</strong> ${job.salary || "Data not available."}</p>
-            <p><strong>Projected Growth:</strong> ${job.growth || "Not provided."}</p>
-            <p><strong>Recommended Companies:</strong> ${job.companies || "No recommendations available."}</p>
-            <p><strong>Certifications:</strong> ${job.certifications || "No certifications available."}</p>
+            <h3 onclick="toggleDetails(${index})">${job.title}</h3>
+            <div id="job-details-${index}" style="display: none;">
+                <p>${job.description}</p>
+                <p><strong>Key Skills:</strong> ${job.skills}</p>
+                <p><strong>Salary:</strong> ${job.salary}</p>
+                <p><strong>Projected Growth:</strong> ${job.growth}</p>
+                <p><strong>Recommended Companies:</strong> ${job.companies}</p>
+                <p><strong>Certifications:</strong> ${job.certifications}</p>
+            </div>
         `;
         container.appendChild(jobCard);
     });
+}
+
+// Function to toggle job details visibility
+function toggleDetails(index) {
+    const detailsElement = document.getElementById(`job-details-${index}`);
+    if (detailsElement.style.display === "none") {
+        detailsElement.style.display = "block"; // Show details
+    } else {
+        detailsElement.style.display = "none"; // Hide details
+    }
 }
 
 // Function to download job suggestions as an Excel file
@@ -326,5 +299,13 @@ document.getElementById("new-chat-button").addEventListener("click", async () =>
         console.log("Chat history reset successfully.");
     } catch (error) {
         console.error("Error resetting chat:", error);
+    }
+});
+
+// Add event listener for the user input to handle Enter key
+userInput.addEventListener("keypress", (event) => {
+    if (event.key === "Enter") { // Check if the pressed key is Enter
+        event.preventDefault(); // Prevent the default action (form submission)
+        sendButton.click(); // Trigger the click event on the send button
     }
 });

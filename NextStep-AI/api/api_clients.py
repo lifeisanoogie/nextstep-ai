@@ -53,6 +53,7 @@ def openai_job_suggestions(user_input):
             return None, None
 
         tts_response = openai_tts_reformat(message)
+        tts_response = re.sub(r'\*\*(.*?)\*\*', r'\1', tts_response)
 
         print("Leaving openai_job_suggestions function.")
         return suggestions_parsed, tts_response
