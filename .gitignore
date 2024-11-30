@@ -6,6 +6,7 @@ __pycache__/
 
 # Ignore other unwanted files
 *.log
+ffmpeg
 
 # Ignore generated wav file
 output.wav
