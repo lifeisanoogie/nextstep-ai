@@ -104,6 +104,7 @@ I welcome contributions! Follow the steps to get involved:
 ### Known Issues
 - The application currently does not support restarting audio from the beginning. The audio can only be paused and the played again from the same point.
 - TTS responses might take slightly longer for complex queries due to API processing time.
+- There seem to be some bugs in the handling of the JSON from the first API client every now and then.
 
 ### Feature Enhancements
 - Add a database to store user preferences and history for personalized recommendations.
