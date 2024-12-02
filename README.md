@@ -14,6 +14,12 @@ NextStep AI is an interactive web application that provides personalized job sug
 
 ---
 
+## **Video Demonstration**
+
+https://youtu.be/jDF2w17CenY
+
+---
+
 ## **Technologies Used**
 
 - **Backend**: Python, Flask
