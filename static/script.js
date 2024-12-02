@@ -12,6 +12,11 @@ let transcriptionData = ""; // Variable to store transcription data
 let chat_history = []; // Array to store chat history
 let firstChat = true; // Flag to track if it's the first chat
 
+// Get the audio element and control buttons
+const audioElement = document.getElementById("audio");
+const playButton = document.getElementById("play-button");
+const pauseButton = document.getElementById("pause-button");
+
 // Start recording
 recordButton.addEventListener("click", async () => {
     isRecording = true; // Set to true immediately
@@ -61,17 +66,12 @@ stopButton.addEventListener("click", async () => {
 
 // Function to play audio and sync the blue orb
 function playAudio(audioBase64) {
-    const audio = new Audio("data:audio/wav;base64," + audioBase64);
-    const blueOrb = document.getElementById("blue-orb");
-
-    // Set the audio element to the global variable
-    const audioElement = document.getElementById("audio");
     audioElement.src = "data:audio/wav;base64," + audioBase64;
 
     // Create an audio context and analyser
-    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    const audioContext = new (window.AudioContext || window.webkit.AudioContext)();
     const analyser = audioContext.createAnalyser();
-    const source = audioContext.createMediaElementSource(audio);
+    const source = audioContext.createMediaElementSource(audioElement);
     source.connect(analyser);
     analyser.connect(audioContext.destination);
 
@@ -89,7 +89,7 @@ function playAudio(audioBase64) {
     }
 
     // Start playing the audio and animation
-    audio.play()
+    audioElement.play()
         .then(() => {
             console.log("Audio is playing");
             blueOrb.style.display = "block";
@@ -101,10 +101,26 @@ function playAudio(audioBase64) {
         });
 
     // Hide the blue orb when the audio ends
-    audio.onended = () => {
+    audioElement.onended = () => {
         blueOrb.style.transform = "translateX(-50%) scale(1)"; // Reset scale
     };
 }
+
+// Add event listeners for the audio controls
+playButton.addEventListener("click", () => {
+    audioElement.play();
+    blueOrb.style.display = "block"; // Show the blue orb when playing
+});
+
+pauseButton.addEventListener("click", () => {
+    audioElement.pause();
+});
+
+stopButton.addEventListener("click", () => {
+    audioElement.pause();
+    audioElement.currentTime = 0; // Reset audio to the beginning
+    blueOrb.style.transform = "translateX(-50%) scale(1)"; // Reset scale
+});
 
 // Add event listener for the send button
 sendButton.addEventListener("click", async () => {
