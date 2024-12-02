@@ -14,12 +14,6 @@ NextStep AI is an interactive web application that provides personalized job sug
 
 ---
 
-## **Video Demonstration**
-
-https://youtu.be/jDF2w17CenY
-
----
-
 ## **Technologies Used**
 
 - **Backend**: Python, Flask
@@ -28,6 +22,12 @@ https://youtu.be/jDF2w17CenY
   - OpenAI GPT for generating job suggestions and answering follow-up questions.
   - ElevenLabs for generating natural-sounding TTS audio.
 - **Audio Recording**: PyAudio for recording and processing user audio input.
+
+---
+
+## **Video Demonstration**
+
+https://youtu.be/jDF2w17CenY
 
 ---
 
