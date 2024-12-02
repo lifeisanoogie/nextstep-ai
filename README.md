@@ -111,7 +111,7 @@ I welcome contributions! Follow the steps to get involved:
 - Enhance the UI with better animations and accessibility features.
 
 ### License
-This project is licensed under the MIT License. See the LICENSE file for details.
+This project is licensed under the GNU General Public License v3. See the [LICENSE](./LICENSE) file for details.
 
 ### Acknowledgments
 - Dr. Tyler Bells and his class on Generative AI Tools at the University of Iowa. Without his instruction on APIs this project would not exist.
