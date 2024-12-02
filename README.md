@@ -102,12 +102,12 @@ I welcome contributions! Follow the steps to get involved:
 5. Open a pull request.
 
 ### Known Issues
-- The application currently does not support resuming audio playback after stopping.
+- The application currently does not support restarting audio from the beginning. The audio can only be paused and the played again from the same point.
 - TTS responses might take slightly longer for complex queries due to API processing time.
 
 ### Feature Enhancements
 - Add a database to store user preferences and history for personalized recommendations.
-- Implement advanced audio controls (e.g., pause, resume).
+- Implement advanced audio controls (e.g., playback, media control UI).
 - Enhance the UI with better animations and accessibility features.
 
 ### License
