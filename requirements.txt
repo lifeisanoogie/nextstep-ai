@@ -1,0 +1,8 @@
+Flask==2.3.2                  # Web framework for Python
+Flask-Cors==3.0.10            # Handling Cross-Origin Resource Sharing (if needed for frontend-backend communication)
+pyaudio==0.2.12               # Audio recording
+wave==0.0.2                   # Audio file processing
+requests==2.31.0              # HTTP requests for interacting with APIs
+python-dotenv==1.0.0          # Managing environment variables from a .env file
+openai==0.27.8                # OpenAI API integration
+elevenlabs==0.2.15            # ElevenLabs API integration
