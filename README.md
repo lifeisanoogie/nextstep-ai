@@ -10,7 +10,7 @@ NextStep AI is an interactive web application that provides personalized job sug
 - **Follow-Up Question Handling**: Ask follow-up questions about job suggestions, skills, or industries for more clarity and guidance.
 - **Text-to-Speech Integration**: Hear responses read aloud through a seamless TTS interface.
 - **Interactive User Experience**: A clean and simple web interface for user interaction.
-- **Dynamic Message History**: Context-aware responses based on previous interactions.
+- **Dynamic Message History**: Context-aware responses based on previous chat input.
 
 ---
 
