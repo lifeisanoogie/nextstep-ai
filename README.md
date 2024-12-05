@@ -35,7 +35,8 @@ https://youtu.be/jDF2w17CenY
 
 ### Prerequisites
 
-- **Python 3.8+**
+- **Python 3.9+**
+  - Most up-to-date python version is always recommended.
 - **Node.js (optional for frontend customization)**
 
 ### Installation
