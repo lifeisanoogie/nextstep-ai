@@ -111,7 +111,8 @@ I welcome contributions! Follow the steps to get involved:
 ### Known Issues
 - The application currently does not support restarting audio from the beginning. The audio can only be paused and the played again from the same point.
 - TTS responses might take slightly longer for complex queries due to API processing time.
-- <del>There seem to be some bugs in the handling of the JSON from the first API client every now and then, it seems to stem from a very specific way of phrasing the way a user asks for jobs and how the first API call responds.</del> I have updated the api_clients and settings files to better force the initial API job suggestions that should fix this issue.
+- <del>There seem to be some bugs in the handling of the JSON from the first API client every now and then, it seems to stem from a very specific way of phrasing the way a user asks for jobs and how the first API call responds.</del>
+  - I have updated the api_clients and settings files to better force the initial API job suggestions that should fix this issue.
 - Must start a new chat using the "New Chat" in order to get another set of jobs, if the user wants the previous jobs to be excluded, they must explicitly say something like "other than job1, job2, ...". The user will be informed of this if they ask for more jobs.
 
 ### Feature Enhancements
