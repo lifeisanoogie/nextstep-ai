@@ -27,7 +27,7 @@ NextStep AI is an interactive web application that provides personalized job sug
 
 ## **Video Demonstration**
 
-https://youtu.be/jDF2w17CenY
+[Demo](https://youtu.be/CoqNAuA16ng)
 
 ---
 
